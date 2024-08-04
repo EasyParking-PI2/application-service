@@ -4,6 +4,8 @@ import cors from 'cors';
 import protect from './middleware/authenticationMiddleware';
 import CustomRequest from './types/CustomRequest.type';
 import errorHandler from './middleware/errorHandler';
+import { testConnection } from './infra/DatabaseConnection';
+import { Veiculo } from './model/Models';
 
 dotenv.config();
 
@@ -20,11 +22,13 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-
 app.get('/protected-route', protect, (req, res) => {
   const user = (req as CustomRequest).user;
+
   res.send(`Hello ${user.name}`);
 });
+
+testConnection();
 
 
 app.listen(PORT, () => {

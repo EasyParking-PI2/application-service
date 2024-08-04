@@ -4,7 +4,7 @@ networks:
   default:
     external:
       name: shared_network
-      
+
 services:
   application-service:
     build: ./
@@ -17,16 +17,20 @@ services:
       - /usr/src/app/node_modules
     depends_on:
       - mysql
+
   mysql:
     image: mysql/mysql-server:latest
     environment:
-      - MYSQL_DATABASE=mysqlDB
-      - MYSQL_ROOT_PASSWORD=mysqlPW
+      MYSQL_ROOT_PASSWORD: mysqlPW
+      MYSQL_DATABASE: easy-parking
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test_pass
+      MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes
     ports:
       - '3306:3306'
     volumes:
       - mysql-volume:/var/lib/mysql
-      
+
 volumes:
   mysql-volume:
     driver: local
