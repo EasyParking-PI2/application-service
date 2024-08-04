@@ -18,10 +18,16 @@
   },
   "homepage": "https://github.com/EasyParking-PI2/application-service#readme",
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.17",
+    "@types/node-fetch": "^2.6.11",
+    "axios": "^1.7.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "node-fetch": "^3.3.2",
+    "sequelize": "^6.37.3"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
