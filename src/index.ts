@@ -22,6 +22,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.use('/api/veiculos', require('./routes/veiculo.route'));
+
 app.get('/protected-route', protect, (req, res) => {
   const user = (req as CustomRequest).user;
 
