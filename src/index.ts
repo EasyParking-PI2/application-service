@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+
 app.get('/protected-route', protect, (req, res) => {
   const user = (req as CustomRequest).user;
   res.send(`Hello ${user.name}`);
