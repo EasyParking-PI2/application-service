@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/veiculos', require('./routes/veiculo.route'));
+app.use('/api/vagas', require('./routes/vaga.route'));
 
 app.get('/protected-route', protect, (req, res) => {
   const user = (req as CustomRequest).user;

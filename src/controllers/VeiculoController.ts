@@ -150,7 +150,7 @@ const updateVeiculo = expressAsyncHandler(async (req, res) => {
 
     await veiculo.save();
 
-    res.status(201).json({
+    res.status(200).json({
       ...veiculo.toJSON,
       dono: user
     });
