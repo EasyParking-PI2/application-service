@@ -28,7 +28,8 @@
     "express-async-handler": "^1.2.0",
     "mysql2": "^3.11.0",
     "node-fetch": "^3.3.2",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "sequelize-typescript": "^2.1.6"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",

@@ -5,7 +5,6 @@ import protect from './middleware/authenticationMiddleware';
 import CustomRequest from './types/CustomRequest.type';
 import errorHandler from './middleware/errorHandler';
 import { testConnection } from './infra/DatabaseConnection';
-import { Veiculo } from './model/Models';
 
 dotenv.config();
 

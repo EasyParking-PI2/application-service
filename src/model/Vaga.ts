@@ -1,8 +1,29 @@
-import { DataTypes } from "sequelize";
 import { sequelize } from "../infra/DatabaseConnection";
+import { Association, BelongsToManyAddAssociationMixin, BelongsToManyCountAssociationsMixin, BelongsToManyGetAssociationsMixin, BelongsToManyHasAssociationMixin, BelongsToManyHasAssociationsMixin, BelongsToManyRemoveAssociationMixin, BelongsToManyRemoveAssociationsMixin, BelongsToManySetAssociationsMixin, DataTypes, HasManyAddAssociationMixin, HasManyAddAssociationsMixin, HasManyCountAssociationsMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin, HasManyHasAssociationsMixin, HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, HasManySetAssociationsMixin, Model } from "sequelize";
+import { Veiculo } from "./Models";
 
-const Vaga = sequelize.define(
-  'Vaga',
+class Vaga extends Model{
+  declare id: string;
+  declare numero: number;
+  declare categoria: string;
+  declare status: string;
+
+  declare getVeiculos: BelongsToManyGetAssociationsMixin<Veiculo>;
+  declare addVeiculo: BelongsToManyAddAssociationMixin<Veiculo, string>;
+  declare setVeiculos: BelongsToManySetAssociationsMixin<Veiculo, string>;
+  declare removeVeiculo: BelongsToManyRemoveAssociationMixin<Veiculo, string>;
+  declare removeVeiculos: BelongsToManyRemoveAssociationsMixin<Veiculo, string>;
+  declare hasVeiculo: BelongsToManyHasAssociationMixin<Veiculo, string>;
+  declare hasVeiculos: BelongsToManyHasAssociationsMixin<Veiculo, string>;
+  declare countVeiculos: BelongsToManyCountAssociationsMixin;
+
+  declare static associations:{
+    veiculos: Association<Vaga, Veiculo>;
+  }
+}
+
+
+Vaga.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -11,7 +32,8 @@ const Vaga = sequelize.define(
     },
     numero:{
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     categoria:{
       type: DataTypes.ENUM('carro', 'moto', 'caminhonete'),
@@ -24,8 +46,10 @@ const Vaga = sequelize.define(
   },
   {
     tableName: 'vagas',
-    timestamps: false
-  }
+    timestamps: false,
+    sequelize
+  },
 );
+
 
 export {Vaga as VagaModel};
