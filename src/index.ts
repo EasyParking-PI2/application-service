@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+
 app.use('/api/veiculos', require('./routes/veiculo.route'));
 app.use('/api/vagas', require('./routes/vaga.route'));
 
