@@ -1,39 +1,30 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import protect from './middleware/authenticationMiddleware';
-import CustomRequest from './types/CustomRequest.type';
-import errorHandler from './middleware/errorHandler';
-import { testConnection } from './infra/DatabaseConnection';
+import cluster from 'cluster';
+import customExpress from './config/CustomExpress';
 
-dotenv.config();
+const app = customExpress();
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+const numWorkers = 1;
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
 
-app.use(errorHandler);
+  for (let i = 0; i < numWorkers; i++) {
+    cluster.fork();
+  }
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+  cluster.on('listening', function(worker){
+		console.log('cluster connected: '+worker.process.pid);
+	});
 
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+  });
+} else {
+  const port = process.env.PORT || 5000;
 
-app.use('/api/veiculos', require('./routes/veiculo.route'));
-app.use('/api/vagas', require('./routes/vaga.route'));
+  app.listen(port, () => {
+    
+    console.log(`Server is running on port ${port}`);
+  });
 
-app.get('/protected-route', protect, (req, res) => {
-  const user = (req as CustomRequest).user;
-
-  res.send(`Hello ${user.name}`);
-});
-
-testConnection();
-
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+}
