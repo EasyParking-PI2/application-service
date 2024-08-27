@@ -11,7 +11,7 @@ class VeiculoVaga extends Model{
   declare dataHoraSaida: Date;
 
   calculateValue(entrada: Date, saida: Date){
-    const diff = entrada.getTime() - saida.getTime();
+    const diff =  saida.getTime() - entrada.getTime();
     const diffHoras = diff / (1000 * 60 * 60);
     const valor = (diffHoras < 1)? 10 : diffHoras * 10;
 
